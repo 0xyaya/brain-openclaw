@@ -1,16 +1,16 @@
 # brain-openclaw
 
-OpenClaw plugin adapter for [brain](https://github.com/0xyaya/brain) — wires persistent agent memory into [OpenClaw](https://github.com/openclaw/openclaw).
+Gives your [OpenClaw](https://github.com/openclaw/openclaw) agents persistent memory via [brain](https://github.com/0xyaya/brain).
 
-## What this does
+```
+Agent: brain_recall "what did we decide about the database?"
+→ SQLite is safer than Kuzu for concurrent writes [decision]
+→ migration to SQLite planned but not yet scheduled [open]
+```
 
-Registers the following into OpenClaw:
+---
 
-- **Native tools**: `brain_recall`, `brain_push`, `brain_explore`, `brain_get`, `brain_remove`
-- **Flush cron**: processes `queue.jsonl` → graph every 30 minutes
-- **Consolidation hooks**: `after_compaction` pushes a lightweight experience node
-
-## Installation
+## Install
 
 ```bash
 git clone https://github.com/0xyaya/brain-openclaw ~/.openclaw/extensions/brain
@@ -18,12 +18,13 @@ cd ~/.openclaw/extensions/brain && npm install
 ```
 
 Add to `openclaw.json`:
+
 ```json
 {
   "plugins": {
     "brain": {
       "config": {
-        "agentId": "your-agent-id",
+        "agentId": "myagent",
         "corpusRoot": "~/corpus"
       }
     }
@@ -31,13 +32,29 @@ Add to `openclaw.json`:
 }
 ```
 
-Restart the OpenClaw gateway.
+Restart the gateway. Your agent now has `brain_recall`, `brain_push`, `brain_explore`, `brain_get`, and `brain_remove` in its tool list.
+
+---
+
+## What your agent gets
+
+| Tool | What it does |
+|------|-------------|
+| `brain_recall` | Semantic + graph search over memory |
+| `brain_push` | Queue a knowledge or experience node |
+| `brain_explore` | Traverse graph neighborhood of an entity |
+| `brain_get` | Fetch a full node by ID |
+| `brain_remove` | Delete a node — MEMORY.md self-heals |
+
+The plugin also wires a 30-minute flush cron and an `after_compaction` hook that records each session compaction as an experience node.
+
+---
 
 ## Requirements
 
-- [brain](https://github.com/0xyaya/brain) CLI installed and initialized
+- [brain](https://github.com/0xyaya/brain) installed and initialized (`brain init --agent myagent`)
 - OpenClaw gateway running
 
-## License
+---
 
 MIT
