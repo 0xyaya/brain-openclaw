@@ -1,0 +1,10 @@
+{
+  "name": "brain-openclaw",
+  "version": "0.1.0",
+  "description": "OpenClaw plugin adapter for brain — wires brain memory into OpenClaw agents",
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "brain-plugin": "file:../brain"
+  }
+}

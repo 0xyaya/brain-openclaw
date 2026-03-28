@@ -1,0 +1,10 @@
+{
+  "name": "brain-openclaw",
+  "version": "0.1.0",
+  "description": "Wires brain memory into OpenClaw — native tools (brain_recall, brain_push, brain_explore, brain_get, brain_remove), flush cron, consolidation hooks",
+  "main": "index.js",
+  "config": {
+    "agentId": { "type": "string", "default": "neo", "description": "Default agent ID" },
+    "corpusRoot": { "type": "string", "default": "~/corpus", "description": "Root directory for agent memory files" }
+  }
+}
